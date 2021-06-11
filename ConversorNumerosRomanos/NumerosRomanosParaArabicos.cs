@@ -11,6 +11,10 @@ namespace ConversorNumerosRomanos
 
         private Dictionary<string, int> dicionarioConversao = new Dictionary<string, int>()
         {
+            { "m", 1000000},
+            { "d", 500000 },
+            { "c", 100000 },
+            { "l", 50000 },
             { "x", 10000 },
             { "v", 5000 },
             { "i", 1000 },
@@ -29,8 +33,8 @@ namespace ConversorNumerosRomanos
             "X",
             "C",
             "i",
-            "v",
-            "x"
+            "x",
+            "c"
         };
 
         public NumerosRomanosParaArabicos(string numeroRomano)
@@ -92,6 +96,10 @@ namespace ConversorNumerosRomanos
             str = str.Replace("Ī", "i");
             str = str.Replace("V̄", "v");
             str = str.Replace("X̄", "x");
+            str = str.Replace("C̄", "c");
+            str = str.Replace("D̄", "d");
+            str = str.Replace("L̄", "l");
+            str = str.Replace("M̄", "m");
 
             return str;
         }

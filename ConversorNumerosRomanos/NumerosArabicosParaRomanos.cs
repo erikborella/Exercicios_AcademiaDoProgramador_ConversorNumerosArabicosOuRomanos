@@ -11,13 +11,19 @@ namespace ConversorNumerosRomanos
 
         private Dictionary<int, string> valoresConversao = new Dictionary<int, string>()
         {
+            { 1000000, "M̄" },
+            { 900000, "C̄M̄" },
+            { 500000, "D̄" },
+            { 400000, "C̄D̄" },
+            { 100000, "C̄"},
+            { 90000, "X̄C̄" },
+            { 50000, "L̄" },
+            { 40000, "X̄L̄" },
             { 10000, "X̄" },
             { 9000, "ĪX̄" },
-            { 8000, "V̄ĪĪĪ" },
-            { 7000, "V̄ĪĪ" },
-            { 6000, "V̄Ī" },
             { 5000, "V̄" },
             { 4000, "ĪV̄" },
+
             { 1000, "M" },
             { 900, "CM" },
             { 500, "D" },
@@ -32,6 +38,13 @@ namespace ConversorNumerosRomanos
             { 4, "IV"},
             { 1, "I"},
         };
+
+        private List<char> letrasComMacronConvertidas = new List<char>()
+        {
+            'i', 'v', 'x', 'c', 'd', 'm'
+        };
+
+        private string milAlternatico = "Ī";
 
         public NumerosArabicosParaRomanos(int valorArabico)
         {
@@ -48,12 +61,38 @@ namespace ConversorNumerosRomanos
             {
                 while (valorParaConversao >= valor)
                 {
-                    saida.Append(valoresConversao[valor]);
+                    string valorEmRomano;
+
+                    if (valor == 1000 && UltimoCaractereTemMacron(saida))
+                        valorEmRomano = milAlternatico;
+                    else
+                        valorEmRomano = valoresConversao[valor];
+                    
+                    saida.Append(valorEmRomano);
                     valorParaConversao -= valor;
                 }
             }
 
             return saida.ToString();
+        }
+
+        private bool UltimoCaractereTemMacron(StringBuilder str)
+        {
+            if (str.Length == 0)
+                return false;
+
+            string valores = str.ToString();
+
+            valores = valores.Replace("Ī", "i");
+            valores = valores.Replace("V̄", "v");
+            valores = valores.Replace("X̄", "x");
+            valores = valores.Replace("C̄", "c");
+            valores = valores.Replace("D̄", "d");
+            valores = valores.Replace("M̄", "m");
+
+            char ultimoCaractere = valores[^1];
+
+            return letrasComMacronConvertidas.Contains(ultimoCaractere);
         }
     }
 }
